@@ -86,6 +86,18 @@ Same notes as above apply wrt GPU usage, memory, orientation, and "baseline" ren
 
 For any questions related to the compilation of caffe-ours and execution of ShapePFCN, please contact kalo@cs.umass.edu
 
+================================
+
+Training/Test data format:
+
+The repository includes the airplanes from L-PSB dataset (http://people.cs.umass.edu/~kalo/papers/LabelMeshes/index.html) as an example of the 
+data format ShapePFCN supports. There are two possible formats:
+a) OBJ files where each training part is stored as a group in an OBJ file (see psbAirplane1 folder and https://en.wikipedia.org/wiki/Wavefront_.obj_file)
+b) OFF files where labels are stored in separate label txt files (see psbAirplane2 folder).
+   In this case, each OFF has a txt file that ends with the string "_labels.txt". Each pair of lines in these txt files contains a label identifier and a list of integers that are indices to faces having that label (the first face has index 1, not 0).
+
+For testing, no OBJ groups or labels txt files are needed. If they are found in the test directory, they will be simply used for evaluating test accuracy.
+
 
 
 
