@@ -24,7 +24,8 @@ To compile in Linux (we assume 32 threads for compilation, change make's *-j32* 
      ./install-defaults.sh --user <your_user_name> --with-osmesa -j32
      cd ../../
      cp -R TheaDepsUnix/Source/Installations/include/GL TheaDepsUnix/Source/Mesa/mesa-11.0.7/include
-```     
+```   
+
    - compile the Thea library (note: adjust the path to the cuda directory according to your system)
 
 ```
