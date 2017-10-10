@@ -16,18 +16,14 @@ https://arxiv.org/abs/1612.02808
 To compile in Linux (we assume 32 threads for compilation, change make's *-j32* option according to your system):
 
 1) First compile Siddhartha Chaudhuri's "Thea" library:
-
-   - compile Thea's dependencies:
-
+  - compile Thea's dependencies:
 ```
      cd TheaDepsUnix/Source/
      ./install-defaults.sh --user <your_user_name> --with-osmesa -j32
      cd ../../
      cp -R TheaDepsUnix/Source/Installations/include/GL TheaDepsUnix/Source/Mesa/mesa-11.0.7/include
 ```   
-
-   - compile the Thea library (note: adjust the path to the cuda directory according to your system)
-
+  - compile the Thea library (note: adjust the path to the cuda directory according to your system)
 ```
      cd Thea/Code/Build
      cmake -DTHEA_INSTALLATIONS_ROOT=../../../TheaDepsUnix/Source/Installations/ -DTHEA_GL_OSMESA=TRUE -DOSMesa_INCLUDE_DIR=../../../TheaDepsUnix/Source/Mesa/mesa-11.0.7/include/ -DOSMesa_GLU_LIBRARIES=../../../TheaDepsUnix/Source/Mesa/mesa-11.0.7/lib -DOPENCL_INCLUDE_DIRS=/usr/local/cuda75/toolkit/7.5.18/include  -DOPENCL_LIBRARIES=/usr/local/cuda75/toolkit/7.5.18/lib64 -DCMAKE_BUILD_TYPE=Release
