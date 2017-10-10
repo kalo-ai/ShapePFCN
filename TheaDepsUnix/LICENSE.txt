@@ -1,0 +1,3 @@
+for license information, please read here:
+
+https://github.com/sidch/Thea

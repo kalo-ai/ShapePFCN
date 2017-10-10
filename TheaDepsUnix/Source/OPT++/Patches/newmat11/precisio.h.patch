@@ -1,0 +1,40 @@
+--- precisio.h.old	2015-08-30 20:18:24.000000000 +0530
++++ precisio.h	2015-08-30 20:18:42.000000000 +0530
+@@ -7,19 +7,22 @@
+ #include <cfloat>
+ #include <cmath>
+ #include <cstdlib>
+ #endif
+ 
++#ifdef _STANDARD_                 // standard library available
++#include <limits>
++#endif
++
+ #ifdef use_namespace
+ namespace NEWMAT {
+ #endif
+ 
+ #ifdef _STANDARD_                 // standard library available
+ 
+-#include<limits>
+ using namespace std;
+-	
++
+ class FloatingPointPrecision
+ {
+ public:
+    static int Dig()              // number of decimal digits or precision
+       { return numeric_limits<Real>::digits10 ; }
+@@ -41,11 +44,11 @@
+ 
+    static Real LnMaximum()       // natural log of maximum
+       { return (Real)log(Maximum()); }
+ 
+    static Real Minimum()         // minimum positive value
+-      { return numeric_limits<Real>::min(); } 
++      { return numeric_limits<Real>::min(); }
+ 
+    static int MinimumDecimalExponent() // minimum decimal exponent
+       { return numeric_limits<Real>::min_exponent10; }
+ 
+    static int MinimumExponent()  // minimum binary exponent
