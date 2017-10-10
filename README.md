@@ -86,7 +86,7 @@ Notes:
    --use-consisent-coord
    *and*
    --up-vector 0.0 1.0 0.0  (if y-axis is gravity axis / change according to the upright axis of your dataset)   
-   (for more discussion about the benefits of upright/consistent orientation, check the arxiv v2 version of our paper)   
+   (for more discussion about the benefits of upright/consistent orientation, check the arxiv v3 version of our paper)   
 - for faster training, you may consider the option: '--baseline-rendering' for both the above commands, which renders models according to a fixed dodecahedron-based camera setting  (the performance drop is minor)
 - you may want to adjust your LD_LIBRARY_PATH so that all required libraries are accessible e.g., in one of the systems we tried our code, before you run the above commands, we execute:
 
