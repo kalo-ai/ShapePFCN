@@ -77,11 +77,11 @@ Notes:
 - if your shapes have consistent upright (gravity) orientation, PLEASE use the following arguments for both the above commands:
    --use-upright-coord
    *and*
-   --up-vector 0.0 1.0 0.0  (if y-axis is gravity axis / change according to the upright axis of your dataset)
+   --up-vector "0.0 1.0 0.0"  (if y-axis is gravity axis / change according to the upright axis of your dataset and use double quotes)
 - if your shapes have consistent upright & frontfacing orientation (i.e., all shapes are consistently aligned), PLEASE use the following arguments for both the above commands:
    --use-consisent-coord
    *and*
-   --up-vector 0.0 1.0 0.0  (if y-axis is gravity axis / change according to the upright axis of your dataset)   
+   --up-vector "0.0 1.0 0.0"  (if y-axis is gravity axis / change according to the upright axis of your dataset)   
    (for more discussion about the benefits of upright/consistent orientation, check the arxiv v3 version of our paper)   
 - for faster training, you may consider the option: '--baseline-rendering' for both the above commands, which renders models according to a fixed dodecahedron-based camera setting  (the performance drop is minor)
 - you may want to adjust your LD_LIBRARY_PATH so that all required libraries are accessible e.g., in one of the systems we tried our code, before you run the above commands, we execute:
