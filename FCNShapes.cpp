@@ -265,23 +265,23 @@ void MVFCN::test()
   label_map.clear();
   ifstream in_labels_file(FilePath::concat(Settings::train_meshes_path, LABELS_FILENAME));
   if (!in_labels_file.good())
+    THEA_WARNING << "Cannot read training medata file (storing training label names & ids): " << FilePath::concat(Settings::train_meshes_path, LABELS_FILENAME) << ". This means that you did not execute training at all (!) or did not specify the training path.";
+  else
   {
-    THEA_ERROR << "Cannot proceed: cannot read label file (storing all training label names & ids): " << FilePath::concat(Settings::train_meshes_path, LABELS_FILENAME);
-    return;
-  }
-  while (!in_labels_file.eof())
-  {
-    string label;
-    int id;
-    if (in_labels_file.eof())
-      break;
-    in_labels_file >> label;
-    if (in_labels_file.eof())
-      break;
-    in_labels_file >> id;
-    label_map[label] = id;
+    while (!in_labels_file.eof())
+    {
+      string label;
+      int id;
+      if (in_labels_file.eof())
+        break;
+      in_labels_file >> label;
+      if (in_labels_file.eof())
+        break;
+      in_labels_file >> id;
+      label_map[label] = id;
 
-    THEA_CONSOLE << "Read training label: " << label << " [id: " << id << "]";
+      THEA_CONSOLE << "Read training label: " << label << " [id: " << id << "]";
+    }
   }
   in_labels_file.close();
 

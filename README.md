@@ -54,13 +54,7 @@ To compile in Linux (we assume 32 threads for compilation, change make's *-j32* 
 
    (note: you may need to adjust the library paths in Makefile.config according to your system)
 
-4) You also need to create a symbolic link to Thea's library. In the root ShapePFCN directory, type:
-
-```
-     ln -s Thea/Code/Build/Output/lib lib
-```     
-
-5) Download the pretrained VGG model on ImageNet from here :
+4) Download the pretrained VGG model on ImageNet from here :
 https://www.dropbox.com/s/mz1qyf3265bmngj/vgg_conv.caffemodel?dl=0 (we train starting from a pretrained VGG model). Place it in the ShapePFCN root directory (i.e., frontend_vgg_train_net.txt and vgg_conv.caffemodel should be in the same directory)
 
 
@@ -101,11 +95,11 @@ Notes:
 
 ---
 
-To run the testing procedure:
+To run the testing procedure (after you execute training!):
 
 ```
-     ./build_release/mvfcn.bin --skip-training --do-only-rendering --test-meshes-path  <your_path_to_test_data>
-     ./build_release/mvfcn.bin --skip-training --skip-test-rendering --test-meshes-path  <your_path_to_test_data> --gpu-use 0
+     ./build_release/mvfcn.bin --skip-training --do-only-rendering --test-meshes-path  <your_path_to_test_data> --train-meshes-path <your_path_to_training_data>
+     ./build_release/mvfcn.bin --skip-training --skip-test-rendering --test-meshes-path  <your_path_to_test_data> --train-meshes-path <your_path_to_training_data> --gpu-use 0
 ```          
 
 Same notes as above apply wrt GPU usage, memory, shape orientation, and "baseline" rendering.

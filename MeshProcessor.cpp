@@ -295,7 +295,7 @@ void MeshProcessor::setGroundTruthLabels(std::map<string, int>& label_map, bool 
     ifstream labels_txt_file(labels_txt_filename);
     if (!labels_txt_file.good())
     {
-      THEA_ERROR << "Could not import labels from " << labels_txt_filename << ". Will not be able to evaluate labeling accuracy";
+      THEA_WARNING << "Could not import labels from " << labels_txt_filename << ". Will not be able to evaluate labeling accuracy";
       return;
     }
 
