@@ -46,7 +46,7 @@ To compile in Linux (we assume 32 threads for compilation, change make's *-j32* 
    (notes: you may need to adjust the library paths in `caffe-ours/Makefile.config' according to your system, and you also need
    to install the libraries that caffe requires: http://caffe.berkeleyvision.org/installation.html)
 
-3) Given that caffe was compiled successfully, you can now compile ShapePFCN:
+3) Given that caffe was compiled successfully, you can now compile ShapePFCN. In the root directory of ShapePFCN, type:
 
 ```
      make -j32
@@ -54,7 +54,13 @@ To compile in Linux (we assume 32 threads for compilation, change make's *-j32* 
 
    (note: you may need to adjust the library paths in Makefile.config according to your system)
 
-4) Download the pretrained VGG model on ImageNet from here :
+4) You also need to create a symbolic link to Thea's library. In the root ShapePFCN directory, type:
+
+```
+     ln -s Thea/Code/Build/Output/lib lib
+```     
+
+5) Download the pretrained VGG model on ImageNet from here :
 https://www.dropbox.com/s/mz1qyf3265bmngj/vgg_conv.caffemodel?dl=0 (we train starting from a pretrained VGG model). Place it in the ShapePFCN root directory (i.e., frontend_vgg_train_net.txt and vgg_conv.caffemodel should be in the same directory)
 
 
