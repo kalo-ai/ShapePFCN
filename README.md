@@ -33,11 +33,13 @@ To compile in Linux (we assume 32 threads for compilation, change make's *-j32* 
 ```     
 
 2) Given that Thea's libraries were compiled successfully (for questions related to Thea, please email Siddhartha Chaudhuri),
-   the next step is to compile our version of caffe (sorry, we modified caffe to incorporate our own data & projection layers):
+   the next step is to compile our version of caffe (sorry, we modified caffe to incorporate our own data & projection layers) and generate the header used for parsing protobuf schemas in Caffe:
+
 
 ```
      cd caffe-ours   
      make -j32
+     sh generate_proto.sh     
      cd ../
 ```
 
