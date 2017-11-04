@@ -102,7 +102,7 @@ usage(int argc, char * argv[])
     << "  --use-consisent-coord                 : Use x, y, z raw input. Make sure that models are consistently oriented according to all axes!!!\n"
     << "  --render-size  <int>                  : Size of rendered images to use during the rendering loop.\n"
     << "  --num-sample-points  <int>            : Number of surface sample points to use for camera placement\n"
-    << "  --up-vector  <double double double>   : Upright vector. Default is 0 0 0 which means that an exhaustive search over camera upright orientations will be used\n"
+    << "  --up-vector  \"<double double double>\"   : Upright vector (use double quotes). Default is 0 0 0 which means that an exhaustive search over camera upright orientations will be used\n"
     << "  --do-not-use-stochastic-mvfcn         : Do not use stochastic version of joint MVFCN (see paper) - this means that training can happen only in the CPU (not well tested option and too slow)\n"
     << "  --skip-train-rendering                : Skip rendering during training - assume that all images necessary to train the network are already stored in the predefined folders.\n"
     << "  --skip-test-rendering                 : Skip rendering during testing - assume that all images necessary to test the network are already stored in the predefined folders.\n"
