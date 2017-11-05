@@ -80,11 +80,7 @@ Notes:
    --use-upright-coord
    *and*
    --up-vector "0.0 1.0 0.0"  (if y-axis is gravity axis / change according to the upright axis of your dataset and use double quotes)
-- if your shapes have consistent upright & frontfacing orientation (i.e., all shapes are consistently aligned), PLEASE use the following arguments for both the above commands:
-   --use-consisent-coord
-   *and*
-   --up-vector "0.0 1.0 0.0"  (if y-axis is gravity axis / change according to the upright axis of your dataset)   
-   (for more discussion about the benefits of upright/consistent orientation, check the arxiv v3 version of our paper)   
+   (for more discussion about the benefits of consistent upright orientation, check the arxiv v3 version of our paper)   
 - for faster training, you may consider the option: '--baseline-rendering' for both the above commands, which renders models according to a fixed dodecahedron-based camera setting  (the performance drop is minor)
 - after rendering is completed (i.e., execution of the first command), there might be a crash at the very end of the program in some systems (after all the rendered images are produced). This might be due to a double deallocation of GL resources, which we unfortunately did not figure out why it happens. However, since this is done after all rendering is completed (check if all rendered images are produced for all your meshes), the training (and similarly testing) will not be affected. We aplogogize for the ``academic'' nature of the code - it is not bulletproof!
 - you may want to adjust your LD_LIBRARY_PATH so that all required libraries are accessible e.g., in one of the systems we tried our code, before you run the above commands, we execute:

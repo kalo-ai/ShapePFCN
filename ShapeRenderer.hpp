@@ -139,7 +139,8 @@ struct FaceColorizer
 			}
 			else
 			{
-				throw Error(format("Invalid Color mode"));
+        color.set(0, 0, 0, 0); // render black
+				// throw Error(format("Invalid Color mode"));
 			}
 			
 			mesh.setColor((long)tris[i], color);
@@ -192,7 +193,8 @@ struct FaceColorizer
 			}
 			else
 			{
-				throw Error(format("Invalid Color mode"));
+        color.set(0, 0, 0, 0); // render black
+				// throw Error(format("Invalid Color mode"));
 			}
 
 			mesh.setColor((long)quads[i], color);

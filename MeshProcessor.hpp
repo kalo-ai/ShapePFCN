@@ -93,6 +93,7 @@ struct Model
 	FaceIndexMap tri_ids, quad_ids;
 	double mesh_radius;
   double axis_length[3]; // SDF/UP change
+  double min_axis_values[3]; // SDF/UP change
   KDTree * kdtree;  // SDF/UP change
 };
 
@@ -133,7 +134,7 @@ private:
   bool use_for_validation;
   Thea::Ball3 mesh_bsphere;  //Ball3 is pretty light compared to BestFitSphere3
   float mesh_bsphere_radius; // needed separately because mesh_bsphere might need to be delete to save mem
-  double axis_length[3]; // UP change
+  double axis_length[3], min_axis_values[3]; // UP change
   vector<int> ground_truth_face_labels;        // K faces x 1
   vector<float> face_areas;                   // K faces x 1
   int number_of_pairwise_features;

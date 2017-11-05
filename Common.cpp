@@ -99,7 +99,7 @@ usage(int argc, char * argv[])
     << "  --training-num-epochs  <int>          : Number of training epochs\n"
     << "  --gpu-use  <'string'>                 : Specify 'false' to use CPU. Specify '<id>' to use GPU with given id e.g., --gpu-use '0' uses first GPU. Specify 'all' to use all GPUs [unstable].\n"
     << "  --use-upright-coord                   : Use the upright coordinate (axis is specified with up-vector) instead x^2+y^2+z^2 as third channel. Make sure that models are consistently oriented according to y-axis!!!\n"
-    << "  --use-consisent-coord                 : Use x, y, z raw input. Make sure that models are consistently oriented according to all axes!!!\n"
+//    << "  --use-consisent-coord                 : Use x, y, z raw input. Make sure that models are consistently oriented according to all axes!!!\n" // experimental feature
     << "  --render-size  <int>                  : Size of rendered images to use during the rendering loop.\n"
     << "  --num-sample-points  <int>            : Number of surface sample points to use for camera placement\n"
     << "  --up-vector  \"<double double double>\"   : Upright vector (use double quotes). Default is 0 0 0 which means that an exhaustive search over camera upright orientations will be used\n"

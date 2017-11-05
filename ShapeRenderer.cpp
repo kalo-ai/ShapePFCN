@@ -145,7 +145,7 @@ void ShapeRendererImpl::resetArgs()
 {
 	zoom = 1.0f;
 	out_width = out_height = -1;
-	point_size = 1.0f;
+	point_size = 4.0f;
 	has_up = false;
 	view_up = Vector3(0, 1, 0);
 	color_mode = COLOR_SINGLE_RGB;
@@ -439,10 +439,27 @@ int ShapeRendererImpl::exec(int argc, char ** argv) // SDF/UP change
       render_system->clear();
 
       // Draw model
-      render_system->setMatrixMode(RenderSystem::MatrixMode::MODELVIEW); render_system->pushMatrix();
-      render_system->multMatrix(transform);
-      renderModel(primary_color, false);
-      render_system->setMatrixMode(RenderSystem::MatrixMode::MODELVIEW); render_system->popMatrix();
+      if (!(color_mode & COLOR_BY_FACE_POINT_IDS))
+      {
+        render_system->setMatrixMode(RenderSystem::MatrixMode::MODELVIEW); render_system->pushMatrix();
+        render_system->multMatrix(transform);
+        renderModel(primary_color, false);
+        render_system->setMatrixMode(RenderSystem::MatrixMode::MODELVIEW); render_system->popMatrix();
+      }
+      //else
+      //{
+      //  //// render white mesh
+      //  FaceColorizer id_colorizer(model.tri_ids, model.quad_ids, model.face_labels, COLOR_SINGLE_RGB, view.dir);
+      //  model.mesh_group.forEachMeshUntil(&id_colorizer);
+
+      //  render_system->setMatrixMode(RenderSystem::MatrixMode::MODELVIEW); render_system->pushMatrix();
+      //  render_system->multMatrix(transform);
+      //  renderModel(primary_color, false);
+      //  render_system->setMatrixMode(RenderSystem::MatrixMode::MODELVIEW); render_system->popMatrix();
+
+      //  FaceColorizer id_colorizer2(model.tri_ids, model.quad_ids, model.face_labels, color_mode, view.dir);
+      //  model.mesh_group.forEachMeshUntil(&id_colorizer2);
+      //}
 
       if (color_mode & COLOR_BY_FACE_POINT_IDS)
       {
@@ -640,12 +657,12 @@ void ShapeRendererImpl::renderCoordImage(Camera const & camera, Matrix4 const & 
         }
         else
         {
-          if (abs(up_vector.x()) > .97 )
-            coord = surface_point.x() / model.axis_length[0] + 0.5;
+          if (abs(up_vector.x()) > .97)
+            coord = (surface_point.x() - model.min_axis_values[0]) / model.axis_length[0];
           else if (abs(up_vector.y()) > .97 )
-            coord = surface_point.y() / model.axis_length[1] + 0.5;
+            coord = (surface_point.y() - model.min_axis_values[1]) / model.axis_length[1];
           else if (abs(up_vector.z()) > .97 )
-            coord = surface_point.z() / model.axis_length[2] + 0.5;
+            coord = (surface_point.z() - model.min_axis_values[2]) / model.axis_length[2];
           else
             coord = sqrt(surface_point.x()*surface_point.x() + surface_point.y()*surface_point.y() + surface_point.z()*surface_point.z()) / (model.mesh_radius + 1e-30);
         }
@@ -1351,7 +1368,7 @@ bool ShapeRendererImpl::renderModel(ColorRGBA const & color, bool draw_points)
 	else
 	{
 		// Initialize the shader
-		if ((color_mode & COLOR_BY_FACE_IDS) | (color_mode & COLOR_BY_FACE_POINT_IDS) | (color_mode & COLOR_BY_FACE_LABELS) | (color_mode & COLOR_BY_FACE_LABELS_WITH_PALETTE))
+    if ((color_mode & COLOR_BY_FACE_IDS) | (color_mode & COLOR_BY_FACE_POINT_IDS) | (color_mode & COLOR_BY_FACE_LABELS) | (color_mode & COLOR_BY_FACE_LABELS_WITH_PALETTE))
 		{
 			if (!face_index_shader)
 			{
@@ -1393,7 +1410,7 @@ bool ShapeRendererImpl::renderModel(ColorRGBA const & color, bool draw_points)
 		}
 
 		RenderOptions opts = RenderOptions::defaults();
-		bool simple_mode = !((color_mode & COLOR_BY_FACE_IDS) | (color_mode & COLOR_BY_FACE_POINT_IDS) | (color_mode & COLOR_BY_FACE_LABELS) | (color_mode & COLOR_BY_FACE_LABELS_WITH_PALETTE));
+    bool simple_mode = !((color_mode & COLOR_BY_FACE_IDS) | (color_mode & COLOR_BY_FACE_POINT_IDS) | (color_mode & COLOR_BY_FACE_LABELS) | (color_mode & COLOR_BY_FACE_LABELS_WITH_PALETTE) );
 		if (simple_mode)
 		{
 			opts.useVertexData() = false;

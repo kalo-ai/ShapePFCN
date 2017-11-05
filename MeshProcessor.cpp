@@ -143,6 +143,9 @@ MeshProcessor::MeshProcessor(const string &mesh_path, bool update_label_map, std
     model.axis_length[0] = axis_length[0];
     model.axis_length[1] = axis_length[1];
     model.axis_length[2] = axis_length[2];
+    model.min_axis_values[0] = min_axis_values[0];
+    model.min_axis_values[1] = min_axis_values[1];
+    model.min_axis_values[2] = min_axis_values[2];
 
     model.kdtree = new KDTree; // SDF/UP change
     model.kdtree->add(model.orig_mesh_group); // SDF/UP change
@@ -229,9 +232,18 @@ void MeshProcessor::computeAxisLength(MeshContainer & mesh)
     min_z = min<double>(min_z, c.z());
   }
 
+  min_axis_values[0] = min_x;
+  min_axis_values[1] = min_y;
+  min_axis_values[2] = min_z;
   axis_length[0] = abs(max_x - min_x);
   axis_length[1] = abs(max_y - min_y);
   axis_length[2] = abs(max_z - min_z);
+
+  string more_mesh_metadata_filename = _mesh_path + "_axis.txt";
+  ofstream more_mesh_metadata_file(more_mesh_metadata_filename.c_str());
+  more_mesh_metadata_file << min_x << " " << min_y << " " << min_z << " " << max_x << " " << max_y << " " << max_z << std::endl;
+  more_mesh_metadata_file << axis_length[0] << " " << axis_length[1] << " " << axis_length[2] << std::endl;
+  more_mesh_metadata_file.close();
 }
 
 void MeshProcessor::cloneMeshGroup(MG const & src, MG & dst)

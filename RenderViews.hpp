@@ -59,6 +59,8 @@ private:
 
 	void save_camera_distances(const TheaArray<Real>& camera_distances);
 
+  bool load_sample_points();
+
 	void save_sample_points();
 
 	bool renderFaceIndexImage(ShapeRenderer& renderer, std::string& cmd);

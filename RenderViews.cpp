@@ -42,6 +42,9 @@ RenderViews::RenderViews(const std::shared_ptr<MeshProcessor>& _mesh_processor_p
 
 void RenderViews::sample_points()
 {
+  if (load_sample_points())
+    return;
+
 	MeshSampler<Mesh> sampler(*(mesh_processor_ptr->getMeshPtr()));
 	TheaArray< MeshSampler<Mesh>::Triangle const * > tris;
 	samples_positions.clear();
@@ -124,21 +127,77 @@ void RenderViews::save_sample_points()
   else
     points_file = FilePath::concat(FilePath::concat(dataset_path, MESH_METADATA_FOLDER), FilePath::baseName(mesh_processor_ptr->getMeshPath()) + "_points.txt");
 
+  Model* model = mesh_processor_ptr->getModel();
 	ofstream points_out(points_file.c_str());
 	if (points_out)
 	{
 		int ind = 0;
-		for (TheaArray<Vector3>::iterator it = samples_positions.begin(); it != samples_positions.end(); ++it)
+    TheaArray<Vector3>::iterator itn = model->sample_normals.begin();
+    for (TheaArray<Vector3>::iterator it = model->sample_points.begin(); it != model->sample_points.end(); ++it, ++itn)
 		{
-			if (Settings::baseline_rendering)
-				points_out << (*it)[0] << " " << (*it)[1] << " " << (*it)[2] << std::endl; //Baseline rendering points don't have associated normals
-			else
-				points_out << (*it)[0] << " " << (*it)[1] << " " << (*it)[2] << " " << samples_normals[ind][0] << " " << samples_normals[ind][1] << " " << samples_normals[ind][2] << std::endl;
+      points_out << (*it)[0] << " " << (*it)[1] << " " << (*it)[2] << " " << (*itn)[0] << " " << (*itn)[1] << " " << (*itn)[2] << std::endl;
 			ind++;
 		}
 	}
 	points_out.close();
+}
 
+bool RenderViews::load_sample_points()
+{
+  // Save the sampled points and their normals in a file in the same folder as the mesh
+  std::string points_file;
+  if (Settings::baseline_rendering)
+    points_file = FilePath::concat(FilePath::concat(dataset_path, MESH_METADATA_FOLDER), FilePath::baseName(mesh_processor_ptr->getMeshPath()) + "_points_baseline.txt");
+  else
+    points_file = FilePath::concat(FilePath::concat(dataset_path, MESH_METADATA_FOLDER), FilePath::baseName(mesh_processor_ptr->getMeshPath()) + "_points.txt");
+
+  ifstream points_in(points_file.c_str());
+  if (!points_in.good() && Settings::baseline_rendering)
+  {
+    // make a second attempt to find pts files
+    points_file = FilePath::concat(dataset_path, FilePath::baseName(mesh_processor_ptr->getMeshPath()) + ".pts");
+    points_in.open(points_file.c_str());
+    if (!points_in.good())
+      return false;
+
+    float x, y, z;
+    while (!points_in.eof())
+    {
+      points_in >> x >> y >> z;
+
+      Thea::Vector3 pos = Thea::Vector3(x, y, z);
+      samples_positions.push_back(pos);
+      samples_normals.push_back(Thea::Vector3(0.0, 0.0, 0.0));
+    }
+
+    THEA_CONSOLE << "Found sample points file for input mesh (pts file) - read surface sample points from it - no normals, however!";
+
+    points_in.close();
+    return true;
+  }
+  if (!points_in.good())
+    return false;
+
+  float x, y, z, nx, ny, nz;
+  while (!points_in.eof())
+  {
+    points_in >> x >> y >> z;
+    if (points_in.eof())
+      break;
+
+    points_in >> nx >> ny >> nz;
+
+    Thea::Vector3 pos = Thea::Vector3(x, y, z);
+    samples_positions.push_back( pos );
+    Thea::Vector3 normal = Thea::Vector3(nx, ny, nz);
+    normal.fastUnitize();
+    samples_normals.push_back(normal);
+  }
+
+  THEA_CONSOLE << "Found sample points and normals file for input mesh - read surface sample points from it!";
+
+  points_in.close();
+  return true;
 }
 
 void RenderViews::dodecahedron_points()
@@ -220,6 +279,10 @@ void RenderViews::render()
 	// Sample points
 	if (Settings::baseline_rendering)
 	{
+    Model* model = mesh_processor_ptr->getModel();
+    sample_points();
+    model->sample_points = samples_positions;
+    model->sample_normals = samples_normals;
 		dodecahedron_points();
 	}
 	else
@@ -254,9 +317,10 @@ void RenderViews::render()
 
 		if (Settings::baseline_rendering)
 		{
-			//careful, sample_positions for the baseline_rendering case are not on the mesh surface so the point_id image will make no sense
-			model->sample_points.clear();
-			model->sample_normals.clear();
+			////careful, sample_positions for the baseline_rendering case are not on the mesh surface so the point_id image will make no sense
+      // this is not needed
+			//model->sample_points.clear();
+			//model->sample_normals.clear();
 		}
 		else
 		{
