@@ -55,7 +55,7 @@ To compile in Linux (we assume 32 threads for compilation, change make's *-j32* 
    (note: you may need to adjust the library paths in Makefile.config according to your system)
 
 4) Download the pretrained VGG model on ImageNet from here :
-http://neghvar.cs.umass.edu/public_data/vgg_conv.caffemodel (we train starting from a pretrained VGG model). Place it in the ShapePFCN root directory (i.e., frontend_vgg_train_net.txt and vgg_conv.caffemodel should be in the same directory)
+https://drive.google.com/file/d/1YjMyTsdpsI17pV998_bc145j66i4cum1/view?usp=sharing (we train starting from a pretrained VGG model). Place it in the ShapePFCN root directory (i.e., frontend_vgg_train_net.txt and vgg_conv.caffemodel should be in the same directory)
 
 
 
